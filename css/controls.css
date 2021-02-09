@@ -1,0 +1,158 @@
+:root {
+  --flip-duration: 2s;
+  --flip-width: 5em;
+  --flip-height: 10em;
+  --flip-border: 0.1em;
+  --flip-margin: 0.3em;
+  --flip-background: #F1F1F1;
+  --flip-line: 0.1em;
+  --flip-gradient: linear-gradient(90deg, rgb(238, 238, 238) 0%, rgb(248, 248, 248) 50%, rgb(238, 238, 238) 100%);
+
+  --lever-height: 1em;
+  --lever-thickness: 0.3em;
+  --lever-travel: 88%;
+  --lever-gradient: linear-gradient(90deg, rgb(196, 196, 196) 0%, rgb(220, 220, 220) 50%, rgb(196, 196, 196) 100%);
+  --lever-shadow: #bababa;
+
+  --switch-border: #e6e6e6;
+  --switch-gradient: linear-gradient(90deg, rgb(245, 245, 245) 0%, rgb(255, 255, 255) 50%, rgb(245, 245, 245) 100%);
+
+  --label-font: monospace;
+  --label-font-size: 1.3em;
+  --label-color: white;
+  --label-shadow: inset 0 0 var(--flip-margin) #A1A1A1, 0 0 0 0.15em #D0D0D0;
+}
+
+.topoo-switches {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  display: inline-flex;
+}
+
+.topoo-switch {
+  text-align: center;
+  width: 100%;
+  background: var(--switch-gradient);
+  font-family: var(--label-font);
+}
+
+.topoo-switch .info {
+  display: block;
+  background: white;
+  padding: 0.7em 0 0.5em;
+  margin: 0;
+  box-shadow: 0 0.05em 0 0.03em var(--switch-border);
+  border-top: 1px solid var(--switch-border);
+}
+
+.topoo-switch .flip {
+  width: var(--flip-width);
+  height: var(--flip-height);
+  position: relative;
+  margin: 3.5em auto 1em;
+  border: 1px solid #E5E5E5;
+  box-shadow: 0 0 0 var(--flip-border) #E4E4E4;
+  background: var(--flip-background);
+  background: var(--flip-gradient);
+  border-radius: var(--flip-border);
+}
+
+.topoo-switch .flip input {
+  display: none;
+}
+
+.topoo-switch .flip label {
+  position: absolute;
+  top: 0;
+  display: block;
+  margin: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.topoo-switch .flip .tlever {
+  position: absolute;
+  animation-name: unflip;
+  animation-duration: var(--flip-duration);
+  top: var(--lever-travel);
+  left: var(--flip-margin);
+  height: var(--lever-height);
+  right: var(--flip-margin);
+  margin: var(--flip-margin) 0 0;
+  box-shadow: 0 calc(-1 * var(--lever-thickness))  0em var(--lever-shadow);
+  border: 1px solid #G9G9G9;
+  background: var(--lever-gradient);
+}
+
+.topoo-switch .flip .line {
+  position: absolute;
+  top: var(--flip-margin);
+  bottom: var(--flip-margin);
+  width: var(--flip-line);
+  left: 50%;
+  background: #E1E1E1;
+}
+
+.topoo-switch .flip label:hover {
+  cursor: pointer;
+}
+
+.topoo-switch .flip label::before, .topoo-switch .flip label::after {
+  text-align: center;
+  color: var(--label-color);
+  width: 100%;
+  padding: var(--flip-margin) 0;
+  margin: 0;
+  position: absolute;
+  top: -1em;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: var(--label-font-size);
+}
+
+.topoo-switch .flip label:before {
+  content: attr(data-off);
+  background: #D16F6F;
+  box-shadow: var(--label-shadow);
+}
+
+.topoo-switch .flip label:after {
+  content: attr(data-on);
+  display: none;
+  box-shadow: var(--label-shadow);
+}
+
+.topoo-switch .flip input:checked ~ label:before {
+  display: none;
+}
+
+.topoo-switch .flip input:checked ~ label:after {
+  display: block;
+  background: #84D16F;
+  box-shadow: var(--label-shadow);
+}
+
+.topoo-switch .flip input:checked ~ label .tlever {
+  animation-name: flip;
+  animation-duration: var(--flip-duration);
+  top: 0;
+  box-shadow: 0 var(--lever-thickness) 0 var(--lever-shadow);
+}
+
+@keyframes flip {
+  from {
+    top: var(--lever-travel);
+    box-shadow: 0 calc(-1 * var(--lever-thickness)) 0em var(--lever-shadow);
+  }
+  to { top: 0; box-shadow: 0 var(--lever-thickness) 0 var(--lever-shadow); }
+}
+
+@keyframes unflip {
+  from { top: 0%; box-shadow: 0 var(--lever-thickness) 0em var(--lever-shadow); }
+  to {
+    top: var(--lever-travel);
+    box-shadow: 0 calc(-1 * var(--lever-thickness)) 0 var(--lever-shadow);
+  }
+}
