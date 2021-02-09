@@ -37,7 +37,16 @@
   font-family: var(--label-font);
 }
 
-.topoo-switch .info {
+.topoo-switch:before {
+  content: attr(data-top-text);
+}
+
+.topoo-switch:after {
+  content: attr(data-bottom-text);
+}
+
+.topoo-switch:before,
+.topoo-switch:after {
   display: block;
   background: white;
   padding: 0.7em 0 0.5em;
